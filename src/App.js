@@ -1,24 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import DogList from './components/DogList';
+import NumDogsSelector from './components/NumDogsSelector'
+import { useError } from './hooks';
 
 function App() {
+  const [numDogs, setNumDogs] = useState(5);
+  const error = useError();
+
+  const updateNumberOfDogs = (number) => {
+    setNumDogs(number);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <main>
+        {error ? <div className="error">{error.message}</div> : null}
+        <h1>Pick your favorite dogs!</h1>
+        <NumDogsSelector onChange={updateNumberOfDogs}/>
+        <DogList numDogs={numDogs}></DogList>
+      </main>
   );
 }
 
